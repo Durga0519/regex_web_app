@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Matcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        form {
+            margin-bottom: 2rem;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 1rem;
+            display: block;
+        }
+        textarea, input[type="text"], button {
+            width: 100%;
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f9f9f9;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Regex Matcher and Email Validator</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Regex Matcher</h2>
+            <form action="/results" method="post">
+                <label for="test_string">Test String:</label>
+                <textarea id="test_string" name="test_string" rows="4" placeholder="Enter the string to test">{{ test_string or '' }}</textarea>
+                
+                <label for="regex">Regex:</label>
+                <input type="text" id="regex" name="regex" placeholder="Enter your regex pattern" value="{{ regex or '' }}">
+                
+                <button type="submit">Find Matches</button>
+            </form>
+            
+            {% if matches is not none %}
+                <h3>Matches</h3>
+                <ul>
+                    {% for match in matches %}
+                        <li>{{ match }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </section>
+        
+        <hr>
+        
+        <section>
+            <h2>Email Validator</h2>
+            <form action="/validate_email" method="post">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" placeholder="Enter an email address" value="{{ email or '' }}">
+                
+                <button type="submit">Validate Email</button>
+            </form>
+            
+            {% if email_message is not none %}
+                <h3>Validation Result</h3>
+                <p class="{{ 'error' if email_message == 'Invalid Email' else '' }}">{{ email_message }}</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
